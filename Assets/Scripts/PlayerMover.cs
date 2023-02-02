@@ -28,6 +28,8 @@ public class PlayerMover : NetworkBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        if (!IsOwner) return;
+
         NetworkBehaviour behav = col.gameObject.GetComponentInChildren<NetworkBehaviour>();
         if (behav != null && behav.OwnerId == OwnerId)
         {
