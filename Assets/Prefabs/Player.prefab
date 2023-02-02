@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8178658191872975593}
   - component: {fileID: 5010993071998142804}
   - component: {fileID: 4089874985180149088}
+  - component: {fileID: 9066571823595750155}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -147,9 +148,12 @@ MonoBehaviour:
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
   _isGlobal: 0
+  _initializeOrder: 0
+  _predictedSpawningType: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 2
+  <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7807759643866311769
@@ -212,3 +216,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
+--- !u!114 &9066571823595750155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471502212079221019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f34c293b8a1e24d8ab7ded3db04942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8178658191872975593}
+  _networkObjectCache: {fileID: 0}
+  bulletPrefab: {fileID: 2243380732586049421, guid: 0076b1c8782672a4db503d41e0e4c3af, type: 3}
