@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
+using FishNet.Connection;
 
 public class PlayerMover : NetworkBehaviour
 {
@@ -11,10 +13,38 @@ public class PlayerMover : NetworkBehaviour
     public float speed;
     private Rigidbody2D rb2d;
 
+    public static bool MATCH_STARTED = false;
+
+    [SyncVar(OnChange = nameof(OnBodyColorChange))]
+    public Color bodyColor;
+
+    public bool triggerSceneSwitch = false;
+
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        GetComponent<SpriteRenderer>().color = UnityEngine.Random.ColorHSV();
+    }
+
+    void Update()
+    {
+        if (triggerSceneSwitch && IsServer)
+        {
+            triggerSceneSwitch = false;
+            MATCH_STARTED = true;
+            SceneLoader.SwitchScene(gameObject.GetComponent<NetworkObject>());
+        }
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        bodyColor = UnityEngine.Random.ColorHSV();
+    }
+
+    void OnBodyColorChange(Color prev, Color next, bool asServer)
+    {
+        GetComponent<SpriteRenderer>().color = next;
     }
 
     void FixedUpdate()
@@ -36,7 +66,22 @@ public class PlayerMover : NetworkBehaviour
             return;
         }
 
-        FishNet.InstanceFinder.ClientManager.StopConnection();
+        if (MATCH_STARTED)
+            FishNet.InstanceFinder.ClientManager.StopConnection();
+        else
+        {
+            if (behav != null)
+            {
+                ResetPosition();
+            }
+
+        }
+    }
+
+    void ResetPosition()
+    {
+        gameObject.transform.position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), Random.Range(-5, 5));
+
     }
 
     void RotateGameObjectTowardsMouse()
